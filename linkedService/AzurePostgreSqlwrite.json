@@ -1,0 +1,24 @@
+{
+	"name": "AzurePostgreSqlwrite",
+	"properties": {
+		"annotations": [],
+		"type": "AzurePostgreSql",
+		"version": "2.0",
+		"typeProperties": {
+			"server": "ep-curly-flower-b3p3xyim-pooler.c-4.ap-southeast-1.aws.neon.tech",
+			"port": 5432,
+			"database": "neondb",
+			"sslMode": 2,
+			"username": "neondb_owner",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "neonpostgres-password"
+			},
+			"authenticationType": "Basic"
+		}
+	}
+}
