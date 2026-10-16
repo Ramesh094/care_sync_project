@@ -33,6 +33,7 @@
 			},
 			{
 				"name": "Iterate over the table_ids",
+				"description": "We are using for each activity to iterate over the table_config to fetch the table ids.",
 				"type": "ForEach",
 				"dependsOn": [
 					{
