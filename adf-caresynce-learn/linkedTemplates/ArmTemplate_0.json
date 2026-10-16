@@ -492,6 +492,23 @@
 										],
 										"scriptBlockExecutionTimeout": "02:00:00"
 									}
+								},
+								{
+									"name": "silver to gold fail updater",
+									"type": "Fail",
+									"dependsOn": [
+										{
+											"activity": "Silver To Gold",
+											"dependencyConditions": [
+												"Failed"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"message": "Silver to Gold pipeline failed",
+										"errorCode": "500"
+									}
 								}
 							]
 						}
@@ -1072,25 +1089,6 @@
 							"isSequential": false,
 							"activities": [
 								{
-									"name": "table ids",
-									"type": "SetVariable",
-									"state": "Inactive",
-									"onInactiveMarkAs": "Succeeded",
-									"dependsOn": [],
-									"policy": {
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "table_id",
-										"value": {
-											"value": "@item().table_id",
-											"type": "Expression"
-										}
-									}
-								},
-								{
 									"name": "Ingest from Source",
 									"type": "ExecutePipeline",
 									"dependsOn": [
@@ -1186,6 +1184,23 @@
 											}
 										],
 										"scriptBlockExecutionTimeout": "02:00:00"
+									}
+								},
+								{
+									"name": "Update pipeline as failed",
+									"type": "Fail",
+									"dependsOn": [
+										{
+											"activity": "Ingest from Source",
+											"dependencyConditions": [
+												"Failed"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"message": "Inner pipeline failed with message",
+										"errorCode": "500"
 									}
 								}
 							]
