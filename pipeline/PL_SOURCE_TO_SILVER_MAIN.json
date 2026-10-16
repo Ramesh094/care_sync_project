@@ -51,25 +51,6 @@
 					"isSequential": false,
 					"activities": [
 						{
-							"name": "table ids",
-							"type": "SetVariable",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
-							"dependsOn": [],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "table_id",
-								"value": {
-									"value": "@item().table_id",
-									"type": "Expression"
-								}
-							}
-						},
-						{
 							"name": "Ingest from Source",
 							"type": "ExecutePipeline",
 							"dependsOn": [
