@@ -81,6 +81,10 @@
 						"landing_timestamp": {
 							"value": "@variables('start_time')",
 							"type": "Expression"
+						},
+						"source_file_format": {
+							"value": "@coalesce(activity('Reads table details').output.firstRow.source_file_fomat, '') ",
+							"type": "Expression"
 						}
 					}
 				},
@@ -402,10 +406,21 @@
 											"type": "BinarySource",
 											"storeSettings": {
 												"type": "AzureBlobFSReadSettings",
-												"recursive": true
+												"recursive": false,
+												"modifiedDatetimeStart": {
+													"value": "@variables('watermark_value')",
+													"type": "Expression"
+												},
+												"deleteFilesAfterCompletion": false
 											},
 											"formatSettings": {
 												"type": "BinaryReadSettings"
+											}
+										},
+										"sink": {
+											"type": "BinarySink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
 											}
 										},
 										"enableStaging": false
@@ -413,7 +428,27 @@
 									"inputs": [
 										{
 											"referenceName": "DS_CSV_Binary",
-											"type": "DatasetReference"
+											"type": "DatasetReference",
+											"parameters": {
+												"folder": {
+													"value": "@activity('Reads table details').output.firstRow.source_path",
+													"type": "Expression"
+												},
+												"container": "source"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DS_CSV_Binary",
+											"type": "DatasetReference",
+											"parameters": {
+												"folder": {
+													"value": "@concat(\nactivity('Reads table details').output.firstRow.source_system,\n'/',\nactivity('Reads table details').output.firstRow.source_table_name ,\n'/',\nvariables('start_time')\n)",
+													"type": "Expression"
+												},
+												"container": "landing"
+											}
 										}
 									]
 								}
